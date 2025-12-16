@@ -1,35 +1,54 @@
-export default function Login() {
-    return (
-        <section className="auth-container">
-            <div className="auth-card">
-                <h2>Login</h2>
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            placeholder="peter@abv.bg" 
-                        />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label htmlFor="password">Password:</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                        />
-                    </div>
+import { useContext, useState } from "react";
+import AuthContext from "../../contexts/AuthContext";
 
-                    <button type="submit" className="btn-submit">Login</button>
+export default function Login() {
+    const { loginSubmitHandler } = useContext(AuthContext);
+
+    const [values, setValues] = useState({
+        email: '',
+        password: '',
+    });
+
+    const onChange = (e) => {
+        setValues(state => ({
+            ...state,
+            [e.target.name]: e.target.value
+        }));
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        loginSubmitHandler(values);
+    };
+
+    return (
+        <section id="login-page">
+            <form id="login" onSubmit={onSubmit}>
+                <div className="container">
+                    <h1>Login</h1>
                     
-                    <p className="auth-nav">
-                        Don't have an account? <a href="/register">Register here</a>
-                    </p>
-                </form>
-            </div>
+                    <label htmlFor="email">Email:</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="peter@gmail.com" 
+                        onChange={onChange}
+                        value={values.email}
+                    />
+
+                    <label htmlFor="login-pass">Password:</label>
+                    <input 
+                        type="password" 
+                        id="login-pass" 
+                        name="password" 
+                        onChange={onChange}
+                        value={values.password}
+                    />
+
+                    <input type="submit" className="btn submit" value="Login" />
+                </div>
+            </form>
         </section>
     );
 }

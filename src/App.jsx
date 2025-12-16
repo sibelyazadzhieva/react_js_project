@@ -1,29 +1,47 @@
 import { Routes, Route } from 'react-router-dom';
 
-import Header from "./components/header/Header"
-import Footer from "./components/footer/Footer"
-import Home from "./components/home/Home"
-import Login from "./components/login/Login"
-import Register from "./components/register/Register"
-import RecipeList from "./components/recipe-list/RecipeList"
+import { AuthProvider } from './contexts/AuthContext';
+import { AuthGuard, GuestGuard } from './components/common/RouteGuard'; 
+
+import Header from './components/header/Header';
+import Home from './components/home/Home';
+import Login from './components/login/Login';
+import Register from './components/register/Register';
+import Logout from './components/logout/Logout';
+import Create from './components/create/Create';
+import RecipeList from './components/recipe-list/RecipeList';
+import Details from './components/details/Details';
+import Edit from './components/edit/Edit';
+import './App.css';
 
 function App() {
   return (
-    <div id="box">
-      <Header />
+    <AuthProvider>
+      <div id="box">
+        <Header />
 
-      <main id="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/recipes" element={<RecipeList />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </main>
+        <main id="main-content">
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/catalog" element={<RecipeList />} />
+                <Route path="/catalog/:recipeId" element={<Details />} />
 
-      <Footer />
-    </div>
-  )
+                <Route element={<GuestGuard />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                </Route>
+
+                <Route element={<AuthGuard />}>
+                    <Route path="/create" element={<Create />} />
+                    <Route path="/catalog/:recipeId/edit" element={<Edit />} />
+                    <Route path="/logout" element={<Logout />} />
+                </Route>
+            </Routes>
+        </main>
+
+      </div>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;

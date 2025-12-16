@@ -1,16 +1,66 @@
-# React + Vite
+# Flavorite - ReactJS Project Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Flavorite is a Single Page Application (SPA) built with ReactJS for the SoftUni React Course. It allows users to discover, share, and discuss their favorite cooking recipes.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Public Part (Accessible to everyone)
+* **Home Page**: Welcome screen.
+* **Catalog**: Browse all shared recipes.
+* **Details**: View ingredients, instructions, and comments for specific recipes.
+* **Authentication**: Login and Register functionality.
 
-## React Compiler
+### Private Part (Available for Registered Users)
+* **Create Recipe**: Share your own culinary masterpieces.
+* **Edit/Delete**: Manage your own content.
+* **Comments**: Discuss recipes with other users.
+* **Route Guards**: Protected routes for secure navigation.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Technologies Used
 
-## Expanding the ESLint configuration
+* **ReactJS**: Functional Components, Hooks (useState, useEffect, useContext, useNavigate).
+* **React Router DOM**: Client-side routing.
+* **Context API**: Global Authentication State.
+* **SoftUni Practice Server**: REST API Backend.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Installation & Setup
+
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/sibelyazadzhieva/react_js_project.git](https://github.com/sibelyazadzhieva/react_js_project.git)
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    cd react_js_project
+    npm install
+    ```
+
+3.  **Start the Backend Server**
+    * Download the SoftUni Practice Server.
+    * Run inside the server folder:
+    ```bash
+    node server.js
+    ```
+
+4.  **Start the Application**
+    ```bash
+    npm run dev
+    ```
+
+5.  Open `http://localhost:5173` in your browser.
+
+## 🏗 Architecture
+
+The project follows a standard React folder structure:
+
+* `/src/components` - React components separated by feature (Home, Login, Create, etc.).
+* `/src/contexts` - Global state management (AuthContext).
+* `/src/services` - API service layers for fetching data from the backend.
+* `/src/utils` - Helper functions (Guards).
+
+## 🛡 Security
+
+* **Route Guards**: Prevents guests from accessing private pages and vice-versa.
+* **Owner Validation**: Edit/Delete buttons are visible only to the creator of the content.
+* **Data Validation**: Forms include validation to ensure correct data input.
