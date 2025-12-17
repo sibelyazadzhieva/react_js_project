@@ -1,30 +1,20 @@
 const baseUrl = 'http://localhost:3030/data/recipes';
 
-export const create = async (recipeData) => {
-    const token = localStorage.getItem('accessToken');
-
-    const response = await fetch(baseUrl, {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-            'X-Authorization': token, 
-        },
-        body: JSON.stringify(recipeData)
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        throw result;
+const getAccessToken = () => {
+    const authJSON = localStorage.getItem('auth') || localStorage.getItem('user');
+    if (!authJSON) return null;
+    
+    try {
+        return JSON.parse(authJSON).accessToken;
+    } catch (err) {
+        return null;
     }
-
-    return result;
 };
 
 export const getAll = async () => {
     const response = await fetch(baseUrl);
     const result = await response.json();
-    return Object.values(result); 
+    return Object.values(result);
 };
 
 export const getOne = async (recipeId) => {
@@ -33,8 +23,40 @@ export const getOne = async (recipeId) => {
     return result;
 };
 
+export const create = async (recipeData) => {
+    const token = getAccessToken();
+    
+    const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token
+        },
+        body: JSON.stringify(recipeData)
+    });
+
+    const result = await response.json();
+    return result;
+};
+
+export const edit = async (recipeId, recipeData) => {
+    const token = getAccessToken();
+
+    const response = await fetch(`${baseUrl}/${recipeId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token
+        },
+        body: JSON.stringify(recipeData)
+    });
+
+    const result = await response.json();
+    return result;
+};
+
 export const remove = async (recipeId) => {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     const response = await fetch(`${baseUrl}/${recipeId}`, {
         method: 'DELETE',
@@ -43,22 +65,19 @@ export const remove = async (recipeId) => {
         }
     });
 
-    const result = await response.json();
-    return result;
+    return response.json();
 };
 
-export const update = async (recipeId, recipeData) => {
-    const token = localStorage.getItem('accessToken');
-
-    const response = await fetch(`${baseUrl}/${recipeId}`, {
-        method: 'PUT',
-        headers: {
-            'content-type': 'application/json',
-            'X-Authorization': token
-        },
-        body: JSON.stringify(recipeData)
-    });
+export const getOwn = async (userId) => {
+    if (!userId) return [];
+    const query = encodeURIComponent(`_ownerId="${userId}"`);
+    
+    const response = await fetch(`${baseUrl}?where=${query}`);
+    
+    if (!response.ok) {
+        return [];
+    }
 
     const result = await response.json();
-    return result;
+    return Object.values(result);
 };

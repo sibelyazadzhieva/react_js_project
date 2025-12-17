@@ -12,6 +12,9 @@ import Create from './components/create/Create';
 import RecipeList from './components/recipe-list/RecipeList';
 import Details from './components/details/Details';
 import Edit from './components/edit/Edit';
+import NotFound from './components/not-found/NotFound';
+import Profile from './components/profile/Profile';
+import Footer from './components/footer/Footer';
 import './App.css';
 
 function App() {
@@ -32,13 +35,15 @@ function App() {
                 </Route>
 
                 <Route element={<AuthGuard />}>
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/create" element={<Create />} />
                     <Route path="/catalog/:recipeId/edit" element={<Edit />} />
                     <Route path="/logout" element={<Logout />} />
                 </Route>
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </main>
-
+      < Footer />
       </div>
     </AuthProvider>
   );

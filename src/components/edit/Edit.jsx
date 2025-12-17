@@ -43,13 +43,14 @@ export default function Edit() {
         }
 
         try {
-            await recipeService.update(recipeId, recipeData);
+            await recipeService.edit(recipeId, recipeData);
             
             navigate(`/catalog/${recipeId}`); 
         } catch (err) {
             console.log(err);
         }
     };
+
     return (
         <section id="create-page"> 
             <form id="edit" onSubmit={onSubmit}>

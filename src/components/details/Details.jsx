@@ -16,10 +16,12 @@ export default function Details() {
 
     useEffect(() => {
         recipeService.getOne(recipeId)
-            .then(result => setRecipe(result));
+            .then(result => setRecipe(result))
+            .catch(err => console.log(err));
 
         commentService.getAll(recipeId)
-            .then(result => setComments(result));
+            .then(result => setComments(result))
+            .catch(err => console.log(err));
     }, [recipeId]);
 
     const isOwner = userId === recipe._ownerId;
@@ -36,16 +38,13 @@ export default function Details() {
         }
     };
 
-
     const addCommentHandler = async (e) => {
         e.preventDefault();
 
         if(newComment.trim() === '') return; 
         try {
             const result = await commentService.create(recipeId, newComment);
-
             result.author = { email: username }; 
-            
             setComments(state => [...state, result]);
             setNewComment(''); 
         } catch(err) {
@@ -62,19 +61,20 @@ export default function Details() {
                 
                 <div className="details-info">
                     <h1>{recipe.title}</h1>
+                    
                     <h3>Ingredients:</h3>
                     <p>{recipe.ingredients}</p>
                     
                     <h3>Preparation Steps:</h3>
                     <p className="prep-text">{recipe.instructions}</p>
+                    
+                    {isOwner && (
+                        <div className="buttons">
+                            <Link to={`/catalog/${recipeId}/edit`} className="btn-edit">Edit</Link>
+                            <button className="btn-delete" onClick={deleteHandler}>Delete</button>
+                        </div>
+                    )}
                 </div>
-
-                {isOwner && (
-                    <div className="buttons">
-                        <Link to={`/catalog/${recipeId}/edit`} className="btn-edit">Edit</Link>
-                        <button className="btn-delete" onClick={deleteHandler}>Delete</button>
-                    </div>
-                )}
 
                 <div className="details-comments">
                     <h2>Comments:</h2>

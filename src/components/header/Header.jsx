@@ -2,31 +2,36 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../contexts/AuthContext';
 
-
 export default function Header() {
-    const { isAuthenticated, username } = useContext(AuthContext);
+    const { isAuthenticated, email } = useContext(AuthContext);
 
     return (
         <header>
             <nav>
-                <Link to="/">Home</Link>
-                <Link to="/catalog">All Recipes</Link> 
-                <Link to="/" className="logo">Flavorite</Link>
-                
-                {isAuthenticated && (
-                    <div id="user">
-                        <Link to="/create">Create Recipe</Link>
-                        <Link to="/logout">Logout</Link>
-                        <span>Welcome, {username}</span>
-                    </div>
-                )}
+                <Link to="/" className="logo">
+                    Flavorite
+                </Link>
 
-                {!isAuthenticated && (
-                    <div id="guest">
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
-                    </div>
-                )}
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/catalog">All Recipes</Link></li>
+
+                    {isAuthenticated ? (
+                        <div id="user">
+                            <Link to="/create">Create Recipe</Link>
+                            <Link to="/profile">Profile</Link>
+                            
+                            <span className="user-greeting">Welcome, {email}</span>
+                            
+                            <Link to="/logout" className="btn-logout">Logout</Link>
+                        </div>
+                    ) : (
+                        <div id="guest">
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Register</Link>
+                        </div>
+                    )}
+                </ul>
             </nav>
         </header>
     );
