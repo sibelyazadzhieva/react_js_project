@@ -9,7 +9,8 @@ export default function Header() {
         <header>
             <nav>
                 <Link to="/" className="logo">
-                    Flavorite
+                <img src="https://cdn-icons-png.flaticon.com/128/14261/14261193.png" alt="logo" />
+                    <span>Flavorite</span>
                 </Link>
 
                 <ul>

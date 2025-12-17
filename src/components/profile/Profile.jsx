@@ -8,14 +8,10 @@ export default function Profile() {
     const { userId, email } = useContext(AuthContext); 
     const [ownRecipes, setOwnRecipes] = useState([]);
 
-    console.log("Profile component - User ID:", userId);
-    console.log("Profile component - Email:", email);
-
     useEffect(() => {
         if (userId) {
             recipeService.getOwn(userId)
                 .then(result => {
-                    console.log("Recipes from server:", result); 
                     setOwnRecipes(result);
                 })
                 .catch(err => console.log(err));
@@ -26,7 +22,7 @@ export default function Profile() {
         <section id="profile-page">
             <div className="profile-info">
                 <div className="profile-img">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="profile" />
+                    <img src="https://cdn-icons-png.flaticon.com/128/6723/6723955.png" alt="profile" />
                 </div>
                 <div className="profile-details">
                     <h1>User Profile</h1>

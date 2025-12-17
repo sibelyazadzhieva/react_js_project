@@ -76,7 +76,7 @@ header nav a {
 }
 
 header nav a:hover {
-    color: #3498db;
+    color: rgba(166, 123, 91, 0.3);
 }
 
 
@@ -319,7 +319,6 @@ nav a:hover {
     font-size: 0.9rem;
 }
 
-/* Details Page */
 #details-page {
     display: flex;
     justify-content: center;
